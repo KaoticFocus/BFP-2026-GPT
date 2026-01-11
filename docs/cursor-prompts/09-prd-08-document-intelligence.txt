@@ -1,0 +1,24 @@
+GOAL
+Implement PRD 8: document upload, classify, OCR pipeline, extraction pipeline, needs-review queue, confirm extraction. Index extracted text for RAG.
+
+DO NOT
+- Auto-trust extracted data
+- Skip human review for cost items
+
+FILES
+- /packages/db/prisma/schema.prisma (Document, DocumentPage)
+- /apps/api/src/routes/docs.ts
+- /apps/api/src/workers/docOcrWorker.ts (vision or tesseract stub)
+- /apps/api/src/workers/docExtractWorker.ts (AI extraction)
+- /packages/ai/src/prompts/doc_classifier.v1.ts
+- /packages/ai/src/prompts/quote_extractor.v1.ts
+- /packages/ai/src/prompts/bill_extractor.v1.ts
+- /apps/web/app/(app)/app/[orgSlug]/docs/page.tsx
+- /apps/web/app/(app)/app/[orgSlug]/docs/[docId]/page.tsx (review form)
+
+TESTS
+- integration: confirm extraction creates VendorBill + CostCommitted
+
+STOP CONDITION
+Stop once documents can be uploaded, processed, reviewed, and confirmed.
+Print: "STOP — PRD 8 complete. Say 'continue' for PRD 9."

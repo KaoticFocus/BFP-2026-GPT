@@ -1,0 +1,20 @@
+GOAL
+Implement PRD 7: Universal Intake inbox + capture endpoint + AI classify/extract draft + dedupe suggestions + confirm-before-create into real entities.
+
+DO NOT
+- Auto-create leads/tasks/docs
+- Skip confirmation step
+
+FILES
+- /packages/db/prisma/schema.prisma (IntakeItem, IntakeAttachment)
+- /apps/api/src/routes/intake.ts (/:id/analyze, /:id/confirm)
+- /packages/ai/src/prompts/intake_classifier.v1.ts
+- /packages/ai/src/prompts/intake_extractor.v1.ts
+- /apps/web/app/(app)/app/[orgSlug]/inbox/page.tsx (review + confirm UI)
+
+TESTS
+- integration: confirm creates Lead + emits LeadCreated
+
+STOP CONDITION
+Stop once intake items can be analyzed and confirmed into real entities.
+Print: "STOP — PRD 7 complete. Say 'continue' for PRD 8."

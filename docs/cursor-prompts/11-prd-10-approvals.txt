@@ -1,0 +1,21 @@
+GOAL
+Implement PRD 10: ApprovalRequest + ApprovalDecision, approvals inbox UI, enforcement gates for side effects.
+
+DO NOT
+- Auto-approve
+- Allow side effects without approval
+
+FILES
+- /packages/db/prisma/schema.prisma (ApprovalRequest, ApprovalDecision)
+- /apps/api/src/routes/approvals.ts (list, approve, reject)
+- /apps/api/src/services/approvals/approvalService.ts (createApprovalRequest, gatingLogic)
+- /apps/web/app/(app)/app/[orgSlug]/approvals/page.tsx
+- /apps/web/components/approvals/ApprovalCard.tsx
+- /apps/web/components/approvals/DiffView.tsx
+
+TESTS
+- integration: message send requires approval before email actually sent
+
+STOP CONDITION
+Stop once approval gates block real sends and approvals unlock them.
+Print: "STOP — PRD 10 complete. Say 'continue' for PRD 11."

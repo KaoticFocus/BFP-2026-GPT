@@ -1,0 +1,20 @@
+GOAL
+Implement PRD 6: Ask BuildFlow (grounded Q&A) using pgvector. Strict citations. RBAC-filtered retrieval. Log every AI call in AIActionLog.
+
+DO NOT
+- Return answers without citations
+- Leak documents user cannot access
+
+FILES
+- /packages/ai/src/rag/index.ts (chunk, embed, retrieve with RBAC filter)
+- /packages/ai/src/prompts/ask_buildflow.v1.ts
+- /apps/api/src/routes/ai.ts (POST /v1/ai/ask, GET /v1/ai/logs/:id)
+- /apps/web/app/(app)/app/[orgSlug]/ask/page.tsx (chat UI with citations)
+
+TESTS
+- integration: RBAC filters exclude unauthorized docs from retrieval
+- unit: prompt output schema validates citations array
+
+STOP CONDITION
+Stop once Ask BuildFlow returns grounded answers with clickable citation links.
+Print: "STOP — PRD 6 complete. Say 'continue' for PRD 7."

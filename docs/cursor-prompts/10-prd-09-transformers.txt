@@ -1,0 +1,22 @@
+GOAL
+Implement PRD 9: transformer runs (draft outputs), preview UI, confirm to create target entities, strict schemas + citations.
+
+DO NOT
+- Auto-create without confirm
+- Return unstructured free text
+
+FILES
+- /packages/db/prisma/schema.prisma (TransformerRun)
+- /apps/api/src/routes/transformers.ts (POST /v1/transformers/run, /:id/confirm)
+- /packages/ai/src/prompts/xform_transcript_tasks.v1.ts
+- /packages/ai/src/prompts/xform_quote_commitment.v1.ts
+- /apps/web/components/transformers/TransformerLauncher.tsx
+- /apps/web/components/transformers/PreviewAndConfirm.tsx
+
+TESTS
+- integration: confirm transcript->tasks creates Task records
+- unit: transformer output validates schema
+
+STOP CONDITION
+Stop once a transformer run can produce draft outputs and user can confirm them.
+Print: "STOP — PRD 9 complete. Say 'continue' for PRD 10."

@@ -1,0 +1,21 @@
+GOAL
+Implement PRD 5: Electron tray app with device-code sign-in, folder watch, offline queue, resumable uploader, OS notifications, deep link handler.
+
+DO NOT
+- Block main thread during uploads
+- Store tokens in plain text
+
+FILES
+- /apps/companion/src/main.ts (tray, IPC)
+- /apps/companion/src/lib/auth.ts (device-code flow)
+- /apps/companion/src/lib/uploader.ts (chunked, resumable)
+- /apps/companion/src/lib/fileWatcher.ts (chokidar)
+- /apps/companion/src/lib/queueDb.ts (better-sqlite3)
+- /apps/companion/renderer/App.tsx
+
+TESTS
+- manual checklist in docs/companion-test.md
+
+STOP CONDITION
+Stop once the companion can watch a folder and upload files when online.
+Print: "STOP — PRD 5 complete. Say 'continue' for PRD 6."

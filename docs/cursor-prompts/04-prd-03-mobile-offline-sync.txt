@@ -1,0 +1,21 @@
+GOAL
+Implement PRD 3: mobile offline queue for task completions, photo uploads, voice note captures. Sync push/pull endpoints.
+
+DO NOT
+- Require real-time connection for basic writes
+- Lose data if the app is killed
+
+FILES
+- /apps/mobile/src/sync/queue.ts (SQLite-based queue: enqueue, dequeue, peek)
+- /apps/mobile/src/sync/syncEngine.ts (push, pull, conflict resolution)
+- /apps/api/src/routes/sync.ts (POST /v1/sync/push, GET /v1/sync/pull)
+- /apps/api/src/routes/uploads.ts (presigned URL generation)
+- /apps/mobile/app/(tabs)/tasks.tsx (optimistic UI with offline indicator)
+
+TESTS
+- integration: offline mutation syncs when online
+- unit: queue persists across app restart
+
+STOP CONDITION
+Stop once task completion works offline and syncs correctly on reconnect.
+Print: "STOP — PRD 3 complete. Say 'continue' for PRD 4."

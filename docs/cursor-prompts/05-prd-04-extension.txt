@@ -1,0 +1,21 @@
+GOAL
+Implement PRD 4: MV3 extension with device-code sign-in, capture selected text + page metadata, attach files, post to /v1/intake/capture. Lightweight offline queue.
+
+DO NOT
+- Store credentials in local storage
+- Auto-create leads/tasks (capture goes to universal inbox)
+
+FILES
+- /apps/extension/manifest.json (permissions, service worker)
+- /apps/extension/src/background/serviceWorker.ts
+- /apps/extension/src/popup/Popup.tsx (quick capture form)
+- /apps/extension/src/lib/queue.ts (IndexedDB queue)
+- /apps/api/src/routes/intake.ts (POST /v1/intake/capture)
+- /apps/web/app/(app)/app/[orgSlug]/inbox/page.tsx (minimal listing)
+
+TESTS
+- integration: capture creates IntakeItem visible in web inbox
+
+STOP CONDITION
+Stop once extension can capture and sync to inbox.
+Print: "STOP — PRD 4 complete. Say 'continue' for PRD 5."
