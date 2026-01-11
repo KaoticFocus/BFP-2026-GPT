@@ -2,32 +2,44 @@
 // ===================================
 // Supports both Prisma (for complex queries) and Supabase (for realtime/auth)
 
-import { PrismaClient } from '@prisma/client';
+// Lazy Prisma client to avoid errors during build
+let _prismaClient: import('@prisma/client').PrismaClient | undefined;
 
-// Singleton pattern for Prisma Client
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined;
-};
-
-export const prisma =
-  globalForPrisma.prisma ??
-  new PrismaClient({
-    log:
-      process.env.NODE_ENV === 'development'
-        ? ['query', 'error', 'warn']
-        : ['error'],
-  });
-
-if (process.env.NODE_ENV !== 'production') {
-  globalForPrisma.prisma = prisma;
+/**
+ * Get the Prisma client instance
+ * Lazy-loaded to avoid issues during build time
+ */
+export function getPrisma() {
+  if (!_prismaClient) {
+    // Dynamic import to avoid build-time errors
+    const { PrismaClient } = require('@prisma/client');
+    _prismaClient = new PrismaClient({
+      log:
+        process.env.NODE_ENV === 'development'
+          ? ['query', 'error', 'warn']
+          : ['error'],
+    });
+  }
+  return _prismaClient;
 }
 
-export { PrismaClient };
-export * from '@prisma/client';
+// Legacy export using Proxy for backwards compatibility
+// Throws at access time, not import time
+export const prisma = new Proxy({} as import('@prisma/client').PrismaClient, {
+  get(_, prop) {
+    return Reflect.get(getPrisma(), prop);
+  },
+});
 
-// Re-export types for convenience
-export type { Prisma } from '@prisma/client';
+// Re-export types (these are safe at build time)
+export type { PrismaClient, Prisma } from '@prisma/client';
 
-// Re-export Supabase client
-export { supabase, supabaseAdmin, createSupabaseClient } from './supabase';
+// Re-export Supabase client (lazy-loaded)
+export { 
+  supabase, 
+  supabaseAdmin, 
+  createSupabaseClient,
+  getSupabase,
+  getSupabaseAdmin 
+} from './supabase';
 export type { Database, SupabaseClient } from './supabase';
