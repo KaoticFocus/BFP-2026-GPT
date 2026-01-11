@@ -1,0 +1,20 @@
+// Prompt registry
+export const PROMPTS = {
+  ASK_BUILDFLOW: 'ask_buildflow',
+  INTAKE_CLASSIFIER: 'intake_classifier',
+  INTAKE_EXTRACTOR: 'intake_extractor',
+  DOC_CLASSIFIER: 'doc_classifier',
+  QUOTE_EXTRACTOR: 'quote_extractor',
+  TRANSCRIPT_TO_TASKS: 'xform_transcript_tasks',
+  MEETING_SUMMARY: 'meeting_dual_summary',
+  DAILY_PLAN: 'daily_plan_generator',
+  SCOPE_FROM_MEETING: 'scope_from_meeting',
+  ESTIMATE_FROM_SCOPE: 'estimate_from_scope',
+  SCHEDULE_GENERATOR: 'schedule_from_scope_tasks',
+  JOBCOST_VARIANCE: 'jobcost_variance_drivers',
+  CO_RECOMMENDATION: 'jobcost_co_recommendation',
+  CO_FROM_VARIANCE: 'co_from_variance_and_scope',
+  RFQ_DRAFT: 'rfq_draft',
+  HANDOFF_PACKET: 'handoff_packet_summary',
+  REVIEW_REQUEST: 'review_request_draft',
+} as const;
