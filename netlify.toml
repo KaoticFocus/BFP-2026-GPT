@@ -2,8 +2,8 @@
 # ==========================================
 
 [build]
-  # Build from root to access all packages
-  command = "npm install -g pnpm && pnpm install && pnpm --filter @buildflow/shared build && pnpm --filter @buildflow/ui build && pnpm --filter @buildflow/db build && cd apps/web && pnpm build"
+  # Build from root - pnpm is pre-installed on Netlify
+  command = "pnpm install && pnpm --filter @buildflow/shared build && pnpm --filter @buildflow/ui build && pnpm --filter @buildflow/db build && cd apps/web && pnpm build"
   
   # Publish the Next.js output
   publish = "apps/web/.next"
