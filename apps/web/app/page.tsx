@@ -98,7 +98,7 @@ export default function Home() {
             Docs
           </Link>
           <Link
-            href="/login"
+            href="/signin"
             className="rounded-lg px-3 py-2 text-sm text-slate-300 hover:bg-slate-900/60 hover:text-slate-100"
           >
             Sign in
@@ -246,7 +246,7 @@ export default function Home() {
                 Launch demo
               </Link>
               <Link
-                href="/login"
+                href="/signin"
                 className="rounded-lg border border-slate-800 bg-slate-950/40 px-4 py-2 text-sm font-semibold text-slate-200 hover:bg-slate-900/50"
               >
                 Sign in
