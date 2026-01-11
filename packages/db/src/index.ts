@@ -4,7 +4,7 @@
 
 // Lazy Prisma client to avoid errors during build
 type PrismaClientType = import('@prisma/client').PrismaClient;
-let _prismaClient: PrismaClientType | null = null;
+let _prismaClient: PrismaClientType | undefined;
 
 /**
  * Get the Prisma client instance
@@ -15,18 +15,20 @@ export function getPrisma(): PrismaClientType {
     return _prismaClient;
   }
 
-  {
-    // Dynamic import to avoid build-time errors
-    const { PrismaClient } = require('@prisma/client');
-    _prismaClient = new PrismaClient({
-      log:
-        process.env.NODE_ENV === 'development'
-          ? ['query', 'error', 'warn']
-          : ['error'],
-    });
-  }
+  // Dynamic require to avoid build-time errors (e.g. during Next build steps)
+  const { PrismaClient } = require('@prisma/client') as {
+    PrismaClient: new (options?: unknown) => PrismaClientType;
+  };
 
-  return _prismaClient;
+  const client = new PrismaClient({
+    log:
+      process.env.NODE_ENV === 'development'
+        ? ['query', 'error', 'warn']
+        : ['error'],
+  });
+
+  _prismaClient = client;
+  return client;
 }
 
 // Legacy export using Proxy for backwards compatibility
