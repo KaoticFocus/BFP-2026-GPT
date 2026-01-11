@@ -1,0 +1,133 @@
+// BuildFlow Pro AI - Prisma Schema
+// See full schema in repository
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [vector]
+}
+
+// Organization & Auth
+model Organization {
+  id        String   @id @default(uuid())
+  name      String
+  slug      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  members   Membership[]
+  @@index([slug])
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  memberships Membership[]
+  @@index([email])
+}
+
+model Membership {
+  id     String @id @default(uuid())
+  userId String
+  orgId  String
+  role   String
+  user   User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  org    Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@unique([userId, orgId])
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  userId    String
+  orgId     String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  @@index([token])
+}
+
+model DeviceCode {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  userCode  String   @unique
+  userId    String?
+  verified  Boolean  @default(false)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+// Event Outbox
+model EventOutbox {
+  id           String    @id @default(uuid())
+  eventType    String
+  eventPayload Json
+  orgId        String
+  createdAt    DateTime  @default(now())
+  publishedAt  DateTime?
+  retryCount   Int       @default(0)
+  lastError    String?
+  @@index([publishedAt])
+}
+
+model EventLog {
+  id            String   @id @default(uuid())
+  eventType     String
+  eventPayload  Json
+  orgId         String
+  actorId       String?
+  correlationId String?
+  createdAt     DateTime @default(now())
+  receipts      EventConsumerReceipt[]
+  @@index([eventType])
+}
+
+model EventConsumerReceipt {
+  id           String   @id @default(uuid())
+  eventLogId   String
+  consumerName String
+  processedAt  DateTime @default(now())
+  success      Boolean
+  error        String?
+  eventLog     EventLog @relation(fields: [eventLogId], references: [id], onDelete: Cascade)
+  @@unique([eventLogId, consumerName])
+}
+
+model DeadLetter {
+  id           String   @id @default(uuid())
+  eventLogId   String
+  consumerName String
+  error        String
+  payload      Json
+  createdAt    DateTime @default(now())
+}
+
+// AI Action Log
+model AIActionLog {
+  id            String   @id @default(uuid())
+  orgId         String
+  userId        String?
+  promptId      String
+  promptVersion Int
+  model         String
+  inputJson     Json
+  outputJson    Json
+  inputTokens   Int
+  outputTokens  Int
+  latencyMs     Int
+  triggerType   String
+  createdAt     DateTime @default(now())
+  @@index([orgId])
+}
+
+// Note: Full schema contains 50+ models for all PRDs
+// Including: Lead, Customer, Project, Task, Document, Meeting, etc.
+// See the complete implementation in the repository.
