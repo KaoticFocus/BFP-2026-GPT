@@ -8,6 +8,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./supabase": {
+      "types": "./dist/supabase.d.ts",
+      "default": "./dist/supabase.js"
     }
   },
   "scripts": {
@@ -19,14 +23,17 @@
     "db:push": "prisma db push",
     "db:seed": "tsx seed/seed.ts",
     "db:studio": "prisma studio",
+    "db:types": "supabase gen types typescript --project-id yixxrkpsbpfjwplztwzo > src/database.types.ts",
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
     "@buildflow/shared": "workspace:*",
-    "@prisma/client": "^6.1.0"
+    "@prisma/client": "^6.1.0",
+    "@supabase/supabase-js": "^2.45.0"
   },
   "devDependencies": {
     "prisma": "^6.1.0",
+    "supabase": "^1.200.0",
     "tsx": "^4.19.0",
     "typescript": "^5.7.0"
   }
