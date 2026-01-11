@@ -1,0 +1,18 @@
+GOAL
+Implement PRD 15: baseline schedule generation (template/AI-assisted), constraints, schedule change drafts, draft notifications + approvals.
+
+DO NOT
+- Apply schedule changes without approval
+
+FILES
+- /packages/db/prisma/schema.prisma (Schedule, Milestone, Dependency, Constraint, ScheduleChange)
+- /apps/api/src/routes/schedules.ts
+- /packages/ai/src/prompts/schedule_from_scope_tasks.v1.ts
+- /apps/web/app/(app)/app/[orgSlug]/projects/[projectId]/schedule/page.tsx
+
+TESTS
+- integration: schedule change draft requires approval before applying
+
+STOP CONDITION
+Stop once schedule can be generated, constraints defined, and changes approved.
+Print: "STOP — PRD 15 complete. Say 'continue' for PRD 16."

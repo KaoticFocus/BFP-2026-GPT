@@ -1,0 +1,22 @@
+GOAL
+Implement PRD 21: closeout status page, closeout checklist instance, handoff packet draft/publish (HTML->PDF export optional), review request drafts gated by CloseoutReady.
+
+DO NOT
+- Send review requests without CloseoutReady (unless owner override w/ reason)
+- Auto-send messages; use Messaging Hub + approvals
+
+FILES
+- /packages/db/prisma/schema.prisma (Closeout, HandoffPacket, ReviewRequestDraft)
+- /apps/api/src/routes/closeout.ts
+- /apps/api/src/services/closeout/closeoutService.ts
+- /packages/ai/src/prompts/handoff_packet_summary.v1.ts (optional)
+- /packages/ai/src/prompts/review_request_draft.v1.ts (optional)
+- /apps/web/app/(app)/app/[orgSlug]/projects/[projectId]/closeout/page.tsx
+
+TESTS
+- integration: CloseoutReady emitted only when punch list + required checklist items complete
+- integration: review request draft can be created but sending requires approval
+
+STOP CONDITION
+Stop once closeout can be marked ready, a handoff packet can be generated, and review request drafts follow gating rules.
+Print: "STOP — PRD 21 complete. Say 'continue' for E2E demo prompt."

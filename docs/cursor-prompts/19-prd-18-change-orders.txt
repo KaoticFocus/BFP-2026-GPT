@@ -1,0 +1,22 @@
+GOAL
+Implement PRD 18: CO drafts, editing, approval, and applying impacts to budget/schedule (draft/apply rules). Customer message must be draft + approval-gated.
+
+DO NOT
+- Auto-approve COs
+- Send CO to customer without Messaging Hub + approval
+
+FILES
+- /packages/db/prisma/schema.prisma (ChangeOrderDraft, ChangeOrder, ChangeOrderAttachment)
+- /apps/api/src/routes/changeOrders.ts
+- /apps/api/src/services/changeorders/changeOrderService.ts
+- /packages/ai/src/prompts/co_from_variance_and_scope.v1.ts
+- /apps/web/app/(app)/app/[orgSlug]/projects/[projectId]/change-orders/page.tsx
+- /apps/web/components/changeorders/ChangeOrderEditor.tsx
+
+TESTS
+- integration: approving CO emits ChangeOrderApproved and updates BudgetUpdated
+- integration: CO customer message is draft-only and requires approval to send
+
+STOP CONDITION
+Stop once a CO can be drafted, edited, approved, and creates message draft (not auto-sent).
+Print: "STOP — PRD 18 complete. Say 'continue' for PRD 19."

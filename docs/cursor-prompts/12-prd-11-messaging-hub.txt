@@ -1,0 +1,20 @@
+GOAL
+Implement PRD 11: message threads, drafts, channel preferences, quiet hours, email provider adapter, approval-gated sends, in-app notifications.
+
+DO NOT
+- Auto-send messages
+- Ignore quiet hours
+
+FILES
+- /packages/db/prisma/schema.prisma (MessageThread, MessageDraft, Message, Notification, ContactPreference)
+- /apps/api/src/routes/messages.ts
+- /apps/api/src/services/messaging/messagingService.ts
+- /apps/api/src/services/messaging/providers/emailProvider.ts
+- /apps/web/app/(app)/app/[orgSlug]/messages/page.tsx
+
+TESTS
+- integration: draft -> approval -> send emits MessageSent
+
+STOP CONDITION
+Stop once messages can be drafted, approved, and sent (with quiet hours respected).
+Print: "STOP — PRD 11 complete. Say 'continue' for PRD 12."

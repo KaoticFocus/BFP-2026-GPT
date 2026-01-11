@@ -1,0 +1,41 @@
+GOAL
+Create a deterministic demo flow (seed + script + docs) that proves the end-to-end BuildFlow MVP works:
+
+lead -> meeting -> transcript -> tasks -> scope/estimate -> budget -> schedule -> time entries -> job-cost variance -> CO draft -> approval -> draft customer message -> closeout -> review draft.
+
+SCOPE
+- Add minimal UI hooks so a human can click through in web.
+- Also add a CLI script that runs the same flow server-side for smoke testing.
+
+FILES
+- /packages/db/seed/seed.ts (ensure consistent IDs + demo orgSlug "demo")
+- /apps/api/src/scripts/demoFlow.ts (CLI)
+- /apps/api/src/routes/demo.ts (optional: POST /v1/demo/reset + POST /v1/demo/run)
+- /docs/demo-script.md (step-by-step click path)
+- /docs/demo-data.md (what entities are created)
+
+REQUIRED ENTITIES CREATED
+1) Org + users (Owner, Sales, Tech)
+2) Lead + customer + contact prefs
+3) Meeting with consent + transcript (mock transcript ok)
+4) Transformer: transcript->task drafts -> confirm -> tasks created
+5) CloserFlow: scope draft + estimate draft
+6) JobCostFlow: budget-from-estimate
+7) Procurement: mock quote parsed -> accept -> commitment created
+8) TimeClockFlow: time entry + timesheet approved -> actual labor posted
+9) JobCostFlow: drift detected -> CORecommended draft
+10) Change Orders: CO draft created -> approval request created
+11) Messaging Hub: message draft created -> approval -> sent (email provider can be a dev sink)
+12) TaskFlow: punch list complete + closeout checklist complete -> CloseoutReady
+13) Closeout: review request draft created (do not auto-send)
+
+CONTRACTS
+- Any side effects MUST be approval-gated in the script too.
+- Every AI/transform call must generate AIActionLog with citations (citations can reference transcript/doc chunks).
+- Events must be emitted for major transitions (LeadCreated, TranscriptReady, TaskCreated, BudgetCreated, CostCommitted, CostActualized, BudgetDriftDetected, CORecommended, ChangeOrderDrafted, MessageDraftCreated, MessageSent, CloseoutReady, ReviewRequestDrafted).
+
+STOP CONDITION
+Stop once:
+- `pnpm demo` runs successfully and prints a summary with URLs to the created demo records in the web app.
+- `/docs/demo-script.md` lets a human reproduce the flow with the UI.
+Then print: "STOP — E2E demo complete."

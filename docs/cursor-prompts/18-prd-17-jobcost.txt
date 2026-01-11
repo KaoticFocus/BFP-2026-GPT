@@ -1,0 +1,20 @@
+GOAL
+Implement PRD 17: cost codes, budget-from-estimate, commitments, actuals rollup, variance + margin views, drift detection -> CO recommendation draft.
+
+DO NOT
+- Auto-create change orders
+
+FILES
+- /packages/db/prisma/schema.prisma (CostCode, ProjectBudget, BudgetLine, CostCommitment, ActualCost)
+- /apps/api/src/routes/jobCost.ts
+- /apps/api/src/services/jobcost/jobCostService.ts
+- /packages/ai/src/prompts/jobcost_variance_drivers.v1.ts
+- /packages/ai/src/prompts/jobcost_co_recommendation.v1.ts
+- /apps/web/app/(app)/app/[orgSlug]/projects/[projectId]/job-cost/page.tsx
+
+TESTS
+- integration: drift over threshold emits BudgetDriftDetected
+
+STOP CONDITION
+Stop once job cost view shows variance and AI can recommend a CO draft.
+Print: "STOP — PRD 17 complete. Say 'continue' for PRD 18."

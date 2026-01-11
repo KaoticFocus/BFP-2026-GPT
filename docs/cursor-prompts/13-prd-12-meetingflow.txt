@@ -1,0 +1,23 @@
+GOAL
+Implement PRD 12: consent gate, meeting record/upload, transcription job, transcript editor, dual summaries (internal/customer), action-item drafts + confirm to create tasks.
+
+DO NOT
+- Record without consent
+- Auto-send customer summary
+
+FILES
+- /packages/db/prisma/schema.prisma (Meeting, ConsentArtifact, AudioRecording, Transcript, MeetingSummary, ActionItemDraft)
+- /apps/api/src/routes/meetings.ts
+- /apps/api/src/workers/transcriptionWorker.ts
+- /packages/ai/src/prompts/meeting_dual_summary.v1.ts
+- /packages/ai/src/prompts/meeting_action_items.v1.ts
+- /apps/web/app/(app)/app/[orgSlug]/meetings/page.tsx
+- /apps/web/components/meetings/ConsentGate.tsx
+- /apps/web/components/meetings/TranscriptEditor.tsx
+
+TESTS
+- integration: confirm action items creates Tasks with citations
+
+STOP CONDITION
+Stop once a meeting can be uploaded, transcribed, summarized, and action items confirmed.
+Print: "STOP — PRD 12 complete. Say 'continue' for PRD 13."

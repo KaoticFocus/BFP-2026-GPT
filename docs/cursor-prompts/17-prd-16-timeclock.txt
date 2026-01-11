@@ -1,0 +1,19 @@
+GOAL
+Implement PRD 16: time entries, timesheets submit/approve, anomaly detection (rules-based MVP), post labor actuals to JobCostFlow.
+
+DO NOT
+- Auto-approve timesheets
+
+FILES
+- /packages/db/prisma/schema.prisma (TimeEntry, Timesheet, TimeAnomaly)
+- /apps/api/src/routes/time.ts
+- /apps/api/src/services/time/anomalyService.ts
+- /apps/web/app/(app)/app/[orgSlug]/time/page.tsx
+- /apps/mobile/src/screens/TimeClock/ClockScreen.tsx
+
+TESTS
+- integration: approved timesheet posts CostActualized events
+
+STOP CONDITION
+Stop once time entries can be submitted, reviewed for anomalies, approved, and posted.
+Print: "STOP — PRD 16 complete. Say 'continue' for PRD 17."

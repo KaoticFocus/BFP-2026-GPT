@@ -1,0 +1,22 @@
+GOAL
+Implement PRD 14: leads, discovery checklist, scope draft, estimate draft, proposal/contract drafts, convert lead->project on contract signed.
+
+DO NOT
+- Auto-convert lead without signed contract
+
+FILES
+- /packages/db/prisma/schema.prisma (Lead, ScopeDraft, EstimateDraft, Proposal, ContractTemplate, Contract)
+- /apps/api/src/routes/leads.ts
+- /apps/api/src/routes/salesDocs.ts
+- /packages/ai/src/prompts/discovery_next_questions.v1.ts
+- /packages/ai/src/prompts/scope_from_meeting.v1.ts
+- /packages/ai/src/prompts/estimate_from_scope.v1.ts
+- /apps/web/app/(app)/app/[orgSlug]/leads/page.tsx
+- /apps/web/app/(app)/app/[orgSlug]/leads/[leadId]/page.tsx
+
+TESTS
+- integration: signed contract creates Project + emits ProjectCreated
+
+STOP CONDITION
+Stop once leads can progress through discovery, scope, estimate, contract, and convert to project.
+Print: "STOP — PRD 14 complete. Say 'continue' for PRD 15."

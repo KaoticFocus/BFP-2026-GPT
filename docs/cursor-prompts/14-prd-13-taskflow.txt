@@ -1,0 +1,22 @@
+GOAL
+Implement PRD 13: tasks CRUD, complete with attachments, checklists (templates, instances, ticks), punch lists (lists, items), daily plan drafts (AI generation + publish).
+
+DO NOT
+- Auto-complete without confirmation
+
+FILES
+- /packages/db/prisma/schema.prisma (Task, TaskAttachment, ChecklistTemplate, ChecklistInstance, PunchList, PunchItem, DailyPlan)
+- /apps/api/src/routes/tasks.ts
+- /apps/api/src/routes/checklists.ts
+- /apps/api/src/routes/punch.ts
+- /apps/api/src/routes/dailyPlans.ts
+- /packages/ai/src/prompts/daily_plan_generator.v1.ts
+- /apps/web/app/(app)/app/[orgSlug]/projects/[projectId]/tasks/page.tsx
+- /apps/mobile/src/screens/TaskDetailScreen.tsx
+
+TESTS
+- integration: completing a task emits TaskCompleted
+
+STOP CONDITION
+Stop once tasks, checklists, punch lists, and daily plans work end-to-end.
+Print: "STOP — PRD 13 complete. Say 'continue' for PRD 14."

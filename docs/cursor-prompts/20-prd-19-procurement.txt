@@ -1,0 +1,22 @@
+GOAL
+Implement PRD 19: vendors/subs, RFQ draft->approval->send, quote upload/parse/review/accept -> commitments, bill capture -> actual cost.
+
+DO NOT
+- Turn procurement into ERP
+- Auto-send RFQs without approvals
+
+FILES
+- /packages/db/prisma/schema.prisma (Vendor, Subcontractor, RFQ, Quote, VendorBill)
+- /apps/api/src/routes/procurement.ts
+- /apps/api/src/services/procurement/procurementService.ts
+- /packages/ai/src/prompts/rfq_draft.v1.ts
+- /apps/web/app/(app)/app/[orgSlug]/vendors/page.tsx
+- /apps/web/app/(app)/app/[orgSlug]/projects/[projectId]/procurement/page.tsx
+
+TESTS
+- integration: quote accept emits CostCommitted and updates job cost summary
+- integration: RFQ send requires approval
+
+STOP CONDITION
+Stop once quote acceptance creates commitments and vendor bill confirm posts actual costs.
+Print: "STOP — PRD 19 complete. Say 'continue' for PRD 20."

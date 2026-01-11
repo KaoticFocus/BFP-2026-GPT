@@ -1,0 +1,21 @@
+GOAL
+Implement PRD 20: versioned SOP templates, gate status computation per project phase, stage-change warnings + override with reason.
+
+DO NOT
+- Hard-block stage changes in MVP (warn + override only)
+- Hide override audit trail
+
+FILES
+- /packages/db/prisma/schema.prisma (SOPTemplate, ProjectGateStatus, StageOverride)
+- /apps/api/src/routes/sops.ts
+- /apps/api/src/services/gates/gatesService.ts
+- /apps/web/app/(app)/app/[orgSlug]/projects/[projectId]/gates/page.tsx
+- /apps/web/components/gates/GateStatusPanel.tsx
+
+TESTS
+- integration: contract signed + checklist completed improves gate status
+- integration: stage change with red gate requires override reason recorded
+
+STOP CONDITION
+Stop once gates compute and stage change flow shows warnings and logs overrides.
+Print: "STOP — PRD 20 complete. Say 'continue' for PRD 21."
