@@ -1,7 +1,9 @@
 // BuildFlow Pro AI - Web API Client
 // =================================
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000';
+// Client-side calls should be same-origin to avoid CORS and to work on Netlify.
+// Next route handlers under /app/api/* will proxy to the real backend API.
+const API_URL = '';
 
 export type ApiResponse<T> = {
   data?: T;
@@ -45,7 +47,7 @@ export const api = {
       accessToken: string;
       user: { id: string; email: string; name: string };
       org: { id: string; name: string; slug: string };
-    }>('/v1/auth/login', {
+    }>('/api/auth/login', {
       method: 'POST',
       body: JSON.stringify({ email, password }),
     }),

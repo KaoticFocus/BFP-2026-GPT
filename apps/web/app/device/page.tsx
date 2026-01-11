@@ -13,8 +13,7 @@ export default function DeviceAuthPage() {
     setError('');
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000';
-      const res = await fetch(`${apiUrl}/v1/auth/device/confirm`, {
+      const res = await fetch(`/api/auth/device/confirm`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userCode: userCode.toUpperCase() }),
@@ -27,8 +26,11 @@ export default function DeviceAuthPage() {
         setError(data.error ?? 'Failed to confirm code');
         setStatus('error');
       }
-    } catch {
-      setError('Network error. Please try again.');
+    } catch (e) {
+      const message = e instanceof Error ? e.message : 'Network error';
+      setError(
+        `Unable to reach the API backend. Set NEXT_PUBLIC_API_URL in Netlify. (${message})`
+      );
       setStatus('error');
     }
   };
