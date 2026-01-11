@@ -3,14 +3,19 @@
 // Supports both Prisma (for complex queries) and Supabase (for realtime/auth)
 
 // Lazy Prisma client to avoid errors during build
-let _prismaClient: import('@prisma/client').PrismaClient | undefined;
+type PrismaClientType = import('@prisma/client').PrismaClient;
+let _prismaClient: PrismaClientType | null = null;
 
 /**
  * Get the Prisma client instance
  * Lazy-loaded to avoid issues during build time
  */
-export function getPrisma() {
-  if (!_prismaClient) {
+export function getPrisma(): PrismaClientType {
+  if (_prismaClient) {
+    return _prismaClient;
+  }
+
+  {
     // Dynamic import to avoid build-time errors
     const { PrismaClient } = require('@prisma/client');
     _prismaClient = new PrismaClient({
@@ -20,6 +25,7 @@ export function getPrisma() {
           : ['error'],
     });
   }
+
   return _prismaClient;
 }
 
