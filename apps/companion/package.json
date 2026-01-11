@@ -1,0 +1,23 @@
+{
+  "name": "@buildflow/companion",
+  "version": "0.1.0",
+  "private": true,
+  "main": "dist/main.js",
+  "scripts": {
+    "dev": "electron .",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@buildflow/shared": "workspace:*",
+    "better-sqlite3": "^11.7.0",
+    "chokidar": "^4.0.0",
+    "electron-store": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.0",
+    "@types/node": "^20.11.0",
+    "electron": "^33.0.0",
+    "typescript": "^5.7.0"
+  }
+}

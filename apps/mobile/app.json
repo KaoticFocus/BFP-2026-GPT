@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "BuildFlow Pro AI",
+    "slug": "buildflow-mobile",
+    "version": "1.0.0",
+    "scheme": "buildflow",
+    "platforms": ["ios", "android"],
+    "plugins": ["expo-router"]
+  }
+}
