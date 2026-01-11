@@ -3,7 +3,12 @@
 
 [build]
   # Build from root - pnpm is pre-installed on Netlify
-  command = "pnpm install && pnpm --filter @buildflow/shared build && pnpm --filter @buildflow/ui build && pnpm --filter @buildflow/db build && cd apps/web && pnpm build"
+  # 1. Install deps
+  # 2. Build shared package (no external deps)
+  # 3. Build ui package (no external deps)  
+  # 4. Generate Prisma client, then build db package
+  # 5. Build the web app
+  command = "pnpm install && pnpm --filter @buildflow/shared build && pnpm --filter @buildflow/ui build && cd packages/db && pnpm db:generate && pnpm build && cd ../.. && cd apps/web && pnpm build"
   
   # Publish the Next.js output
   publish = "apps/web/.next"
