@@ -1,0 +1,29 @@
+You are working inside a pnpm+turborepo monorepo for BuildFlow Pro AI.
+
+NON-NEGOTIABLES
+- Multi-tenant: every domain record includes orgId; all queries must scope by orgId.
+- RBAC: enforce permissions at API layer AND in AI retrieval layer.
+- Event-driven: all cross-module coordination uses canonical events from /packages/events.
+- Outbox pattern: domain writes + EventOutbox insert happen in the same DB transaction.
+- Idempotent consumers: every consumer must be idempotent with (eventId, consumerName) receipt.
+- Review-first AI: AI outputs are drafts only. No side effects without explicit approval.
+- Approvals gate: any external message send, schedule apply, CO approval requires ApprovalRequest -> ApprovalDecision.
+- Auditability: every AI call must create AIActionLog with promptId/version, inputs, retrieved sources, citations, output JSON, model metadata.
+
+TECH DEFAULTS
+- TypeScript everywhere. pnpm + turborepo.
+- Web: Next.js App Router.
+- Mobile: Expo React Native.
+- API: Fastify TypeScript.
+- DB: Postgres + Prisma.
+- Jobs: BullMQ + Redis.
+- Vector: pgvector in Postgres.
+- Desktop extension: Chrome/Edge MV3.
+- Desktop companion: Electron.
+
+OUTPUT RULES
+- When implementing: output changes file-by-file with exact paths.
+- Do not omit essential config files (tsconfig, env sample, prisma schema, migrations, docker-compose).
+- Add tests for core logic: event schemas, outbox publishing, idempotent consumer receipts, AI output validation.
+- If a task is too big for one response: stop at a clear checkpoint and write:
+  "STOP — ready for next step. Tell me 'continue' to proceed."

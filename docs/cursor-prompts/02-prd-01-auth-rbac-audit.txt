@@ -1,0 +1,22 @@
+GOAL
+Implement PRD 1: multi-tenant auth with device-code flow (for extension/companion), RBAC enforcement, audit trail tables.
+
+DO NOT
+- Auto-grant permissions
+- Skip RBAC checks anywhere
+
+FILES
+- /packages/db/prisma/schema.prisma (User, Session, Org, Membership, DeviceCode, AIActionLog)
+- /apps/api/src/plugins/auth.ts (JWT verification + session hydration)
+- /apps/api/src/plugins/rbac.ts (permission checks)
+- /apps/api/src/routes/auth.ts (device code, token exchange, logout)
+- /apps/web/app/(auth)/login/page.tsx
+- /apps/web/app/(auth)/device/page.tsx (display code for companion)
+
+TESTS
+- integration: device-code flow issues token after user approval
+- unit: RBAC blocks unauthorized role
+
+STOP CONDITION
+Stop once login works in web, device-code works in extension stub, RBAC middleware rejects unauthorized calls.
+Print: "STOP — PRD 1 complete. Say 'continue' for PRD 2."

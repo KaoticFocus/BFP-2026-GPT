@@ -1,0 +1,23 @@
+GOAL
+Implement PRD 2: canonical event envelope, schema registry, EventOutbox, EventLog, publisher worker, idempotent consumer receipts.
+
+DO NOT
+- Use external message broker (Kafka/RabbitMQ) — polling-based outbox only
+- Skip idempotency checks
+
+FILES
+- /packages/events/src/envelope.ts (EventEnvelope zod schema, createEvent helper)
+- /packages/events/src/registry.ts (registerEvent, validateEvent)
+- /packages/events/src/schemas/*.ts (LeadCreated, TaskCreated, etc.)
+- /packages/db/prisma/schema.prisma (EventOutbox, EventLog, EventConsumerReceipt, DeadLetter)
+- /apps/api/src/events/outbox.ts (insert, markPublished)
+- /apps/api/src/events/consume.ts (registerConsumer, processEvent with receipt)
+- /apps/api/src/workers/outboxPublisher.ts (poll + publish + move to log)
+
+TESTS
+- integration: duplicate event delivery is idempotent
+- unit: envelope schema rejects invalid event
+
+STOP CONDITION
+Stop once outbox publisher moves events to log and consumer receipts block duplicates.
+Print: "STOP — PRD 2 complete. Say 'continue' for PRD 3."

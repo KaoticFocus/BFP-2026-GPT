@@ -1,0 +1,32 @@
+GOAL
+Scaffold a runnable BuildFlow Pro AI monorepo with pnpm + turborepo.
+
+DO NOT
+- Create production Kubernetes manifests
+- Implement any PRD features yet
+
+FILES
+- /package.json (root)
+- /pnpm-workspace.yaml
+- /turbo.json
+- /tsconfig.base.json
+- /docker-compose.yml (postgres, redis, minio, mailpit)
+- /.gitignore
+- /packages/db/package.json, tsconfig.json, prisma/schema.prisma (placeholder models), seed/seed.ts
+- /packages/shared/package.json, tsconfig.json, src/index.ts (types, utils)
+- /packages/events/package.json, tsconfig.json, src/index.ts (envelope schema stub)
+- /packages/ai/package.json, tsconfig.json, src/index.ts (OpenAI client stub)
+- /packages/ui/package.json, tsconfig.json, src/index.ts (shadcn/tailwind stubs)
+- /apps/api/package.json, tsconfig.json, src/server.ts (Fastify hello world)
+- /apps/web/package.json, tsconfig.json, next.config.ts, app/page.tsx (Next.js hello world)
+- /apps/mobile/package.json, tsconfig.json, app.json, app/index.tsx (Expo hello world)
+- /apps/extension/package.json, manifest.json, src/popup.tsx (MV3 stub)
+- /apps/companion/package.json, src/main.ts (Electron stub)
+
+TESTS
+- unit: pnpm build succeeds for every package
+- integration: docker-compose up starts all services healthy
+
+STOP CONDITION
+Stop once all stubs exist, monorepo links work, and docker-compose.yml is valid.
+Print: "STOP — bootstrap complete. Say 'continue' for PRD 1."
