@@ -7,8 +7,8 @@ export interface AIActionLogParams {
   promptId: string;
   promptVersion: number;
   model: string;
-  inputJson: Record<string, unknown>;
-  outputJson: Record<string, unknown>;
+  inputJson: Prisma.InputJsonValue;
+  outputJson: Prisma.InputJsonValue;
   inputTokens: number;
   outputTokens: number;
   latencyMs: number;
@@ -19,7 +19,7 @@ export interface AIActionLogParams {
 
 export async function logAIAction(params: AIActionLogParams): Promise<string> {
   const log = await prisma.aIActionLog.create({
-    data: params,
+    data: params as any,
   });
   return log.id;
 }

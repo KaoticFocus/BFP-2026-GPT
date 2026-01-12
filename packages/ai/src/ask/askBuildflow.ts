@@ -213,7 +213,7 @@ async function enrichCitations(
       sourceIndex: cite.sourceIndex,
       chunkId: chunk.chunkId,
       documentId: chunk.documentId,
-      documentName: doc?.filename,
+      documentName: doc?.filename ?? undefined,
       relevantQuote: cite.relevantQuote,
       deepLink,
       score: chunk.score,
