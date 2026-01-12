@@ -49,11 +49,19 @@ async function buildServer() {
 
 async function main() {
   const server = await buildServer();
-  initializeConsumers();
-  startOutboxPublisher();
+  if (!process.env.DATABASE_URL) {
+    server.log.error(
+      'Missing required env DATABASE_URL. API will run, but DB-backed features (auth/outbox/etc.) will not work until it is set.'
+    );
+  } else {
+    initializeConsumers();
+    startOutboxPublisher();
+  }
   
   const shutdown = async () => {
-    stopOutboxPublisher();
+    if (process.env.DATABASE_URL) {
+      stopOutboxPublisher();
+    }
     await server.close();
     process.exit(0);
   };
