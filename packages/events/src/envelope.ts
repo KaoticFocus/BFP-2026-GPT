@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto';
 import { z } from 'zod';
 import { IdSchema, OrgIdSchema } from '@buildflow/shared';
 
@@ -33,7 +34,7 @@ export function createEvent<T extends Record<string, unknown>>(params: {
   metadata?: EventEnvelope['metadata'];
 }): EventEnvelope {
   return {
-    id: crypto.randomUUID(),
+    id: randomUUID(),
     type: params.type,
     version: params.version ?? 1,
     orgId: params.orgId,
