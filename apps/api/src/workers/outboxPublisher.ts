@@ -29,7 +29,6 @@ async function publishPendingEvents(): Promise<void> {
             orgId: event.orgId,
             actorId: event.actorId,
             correlationId: event.correlationId,
-            causationId: event.causationId,
           },
         });
         

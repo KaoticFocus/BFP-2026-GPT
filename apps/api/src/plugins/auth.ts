@@ -10,7 +10,7 @@ declare module 'fastify' {
 }
 
 const authPlugin: FastifyPluginAsync = async (fastify) => {
-  fastify.decorateRequest('auth', null);
+  fastify.decorateRequest('auth', undefined);
 
   fastify.addHook('onRequest', async (request) => {
     const authHeader = request.headers.authorization;
@@ -22,7 +22,6 @@ const authPlugin: FastifyPluginAsync = async (fastify) => {
     if (token === 'demo-owner-token') {
       const session = await prisma.session.findUnique({
         where: { token },
-        include: { },
       });
       if (session && session.expiresAt > new Date()) {
         const membership = await prisma.membership.findFirst({

@@ -1,5 +1,6 @@
 import { prisma } from '@buildflow/db';
 import { createEvent, EventEnvelope } from '@buildflow/events';
+import type { Prisma } from '@prisma/client';
 
 export async function insertOutboxEvent(params: {
   type: string;
@@ -39,7 +40,7 @@ export async function incrementRetryCount(eventId: string, error: string): Promi
 }
 
 export async function getPendingOutboxEvents(limit = 100): Promise<Array<{ id: string; eventType: string; eventPayload: object; orgId: string }>> {
-  return prisma.eventOutbox.findMany({
+  const rows = await prisma.eventOutbox.findMany({
     where: {
       publishedAt: null,
       retryCount: { lt: 5 },
@@ -47,4 +48,6 @@ export async function getPendingOutboxEvents(limit = 100): Promise<Array<{ id: s
     orderBy: { createdAt: 'asc' },
     take: limit,
   });
+  // Prisma returns JsonValue for Json columns; callers treat it as an EventEnvelope-ish object.
+  return rows as unknown as Array<{ id: string; eventType: string; eventPayload: object; orgId: string }>;
 }
