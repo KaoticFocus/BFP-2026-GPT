@@ -14,7 +14,7 @@
   "dependencies": {
     "@buildflow/db": "workspace:*",
     "@buildflow/shared": "workspace:*",
-    "@prisma/client": "workspace:*",
+    "@prisma/client": "^6.1.0",
     "openai": "^4.76.0",
     "zod": "^3.24.0"
   },
