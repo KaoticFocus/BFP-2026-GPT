@@ -1,6 +1,7 @@
 // BuildFlow Pro AI - RAG (Retrieval Augmented Generation)
 
-import { prisma, Prisma } from '@buildflow/db';
+import { prisma } from '@buildflow/db';
+import { Prisma } from '@prisma/client';
 import { generateEmbedding } from '../client';
 import { MAX_CONTEXT_CHUNKS, MAX_TOKENS_PER_CHUNK } from '@buildflow/shared';
 

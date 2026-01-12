@@ -1,4 +1,5 @@
 import { prisma } from '@buildflow/db';
+import type { Prisma } from '@prisma/client';
 
 export interface AIActionLogParams {
   orgId: string;
@@ -50,8 +51,8 @@ export async function createAIActionLog(params: CreateAIActionLogParams): Promis
       promptId: params.promptId,
       promptVersion: params.promptVersion,
       model: params.completionResult.model,
-      inputJson: params.inputJson,
-      outputJson: params.outputJson,
+      inputJson: params.inputJson as Prisma.InputJsonValue,
+      outputJson: params.outputJson as Prisma.InputJsonValue,
       inputTokens: params.completionResult.inputTokens,
       outputTokens: params.completionResult.outputTokens,
       latencyMs: params.completionResult.latencyMs,

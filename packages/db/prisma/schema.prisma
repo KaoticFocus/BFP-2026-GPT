@@ -124,10 +124,56 @@ model AIActionLog {
   outputTokens  Int
   latencyMs     Int
   triggerType   String
+  triggerEntityType String?
+  triggerEntityId   String?
   createdAt     DateTime @default(now())
+  citations     AIActionLogCitation[]
+  @@index([orgId])
+}
+
+model AIActionLogCitation {
+  id              String      @id @default(uuid())
+  aiActionLogId   String
+  documentChunkId String
+  score           Float
+  position        Int
+  aiActionLog     AIActionLog @relation(fields: [aiActionLogId], references: [id], onDelete: Cascade)
+  documentChunk  DocumentChunk? @relation(fields: [documentChunkId], references: [id])
+  @@index([aiActionLogId])
+}
+
+// Documents & RAG
+model Document {
+  id        String   @id @default(uuid())
+  orgId     String
+  projectId String?
+  filename  String
+  fileType  String?
+  fileSize  Int?
+  url       String?
+  metadata  Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  chunks    DocumentChunk[]
+  @@index([orgId])
+  @@index([projectId])
+}
+
+model DocumentChunk {
+  id         String   @id @default(uuid())
+  orgId      String
+  documentId String
+  chunkIndex Int
+  content    String   @db.Text
+  embedding  Unsupported("vector(1536)")?
+  metadata   Json?
+  createdAt  DateTime @default(now())
+  document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  citations  AIActionLogCitation[]
+  @@index([documentId])
   @@index([orgId])
 }
 
 // Note: Full schema contains 50+ models for all PRDs
-// Including: Lead, Customer, Project, Task, Document, Meeting, etc.
+// Including: Lead, Customer, Project, Task, Meeting, etc.
 // See the complete implementation in the repository.
