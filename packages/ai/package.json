@@ -12,6 +12,7 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
+    "@buildflow/db": "workspace:*",
     "@buildflow/shared": "workspace:*",
     "openai": "^4.76.0",
     "zod": "^3.24.0"

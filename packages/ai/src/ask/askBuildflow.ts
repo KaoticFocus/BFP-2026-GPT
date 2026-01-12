@@ -182,7 +182,7 @@ async function enrichCitations(
     select: { id: true, filename: true, projectId: true },
   });
 
-  const docMap = new Map(documents.map((d) => [d.id, d]));
+  const docMap = new Map(documents.map((d: { id: string; filename: string | null; projectId: string | null }) => [d.id, d]));
 
   return llmCitations.map((cite) => {
     const chunkIndex = (cite.sourceIndex ?? 1) - 1;

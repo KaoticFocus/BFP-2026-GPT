@@ -20,6 +20,8 @@ export const SYNC_PULL_PAGE_SIZE = 50;
 export const AI_DEFAULT_MODEL = 'gpt-4o';
 export const AI_EMBEDDING_MODEL = 'text-embedding-3-small';
 export const AI_EMBEDDING_DIMENSIONS = 1536;
+export const MAX_CONTEXT_CHUNKS = 8;
+export const MAX_TOKENS_PER_CHUNK = 1000;
 
 export const QUIET_HOURS_DEFAULT_START = 21; // 9 PM
 export const QUIET_HOURS_DEFAULT_END = 8; // 8 AM
