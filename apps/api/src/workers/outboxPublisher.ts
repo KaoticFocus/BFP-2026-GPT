@@ -2,6 +2,7 @@ import { prisma } from '@buildflow/db';
 import { getPendingOutboxEvents, markEventPublished, incrementRetryCount } from '../events/outbox';
 import { processEvent } from '../events/consume';
 import { validateEvent, EventEnvelope } from '@buildflow/events';
+import type { Prisma } from '@prisma/client';
 
 let publisherInterval: NodeJS.Timeout | null = null;
 const POLL_INTERVAL_MS = 1000;
@@ -25,7 +26,7 @@ async function publishPendingEvents(): Promise<void> {
           data: {
             id: event.id,
             eventType: event.type,
-            eventPayload: event as unknown as object,
+            eventPayload: event as unknown as Prisma.InputJsonValue,
             orgId: event.orgId,
             actorId: event.actorId,
             correlationId: event.correlationId,

@@ -14,7 +14,7 @@ export async function insertOutboxEvent(params: {
     data: {
       id: event.id,
       eventType: event.type,
-      eventPayload: event as unknown as object,
+      eventPayload: event as unknown as Prisma.InputJsonValue,
       orgId: event.orgId,
     },
   });
