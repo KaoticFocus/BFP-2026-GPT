@@ -2,7 +2,7 @@ import { prisma } from '@buildflow/db';
 import { getPendingOutboxEvents, markEventPublished, incrementRetryCount } from '../events/outbox';
 import { processEvent } from '../events/consume';
 import { validateEvent, EventEnvelope } from '@buildflow/events';
-import type { Prisma } from '@prisma/client';
+import type { Prisma } from '@buildflow/db';
 
 let publisherInterval: NodeJS.Timeout | null = null;
 const POLL_INTERVAL_MS = 1000;

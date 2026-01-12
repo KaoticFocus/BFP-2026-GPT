@@ -1,6 +1,6 @@
 import { prisma } from '@buildflow/db';
 import { createEvent, EventEnvelope } from '@buildflow/events';
-import type { Prisma } from '@prisma/client';
+import type { Prisma } from '@buildflow/db';
 
 export async function insertOutboxEvent(params: {
   type: string;
