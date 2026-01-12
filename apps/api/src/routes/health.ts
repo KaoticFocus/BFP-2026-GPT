@@ -11,7 +11,9 @@ export const healthRoutes: FastifyPluginAsync = async (fastify) => {
       await prisma.$queryRaw`SELECT 1`;
       return { status: 'ready', database: 'connected' };
     } catch (error) {
-      return reply.status(503).send({ status: 'not_ready', database: 'disconnected' });
+      fastify.log.error({ err: error }, 'Health check failed: database not reachable');
+      const message = error instanceof Error ? error.message : String(error);
+      return reply.status(503).send({ status: 'not_ready', database: 'disconnected', error: message });
     }
   });
 };
